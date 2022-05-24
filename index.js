@@ -45,6 +45,7 @@ async function run(){
             const bookingCollection = client.db("manufacture").collection("bookings");
             const userCollection = client.db("manufacture").collection("users");
             const reviewCollection = client.db("manufacture").collection("reviwes");
+            const profileCollection = client.db("manufacture").collection("myProfile");
 
 
 
@@ -80,6 +81,8 @@ async function run(){
 
             })
 
+            // order api ..........
+
             // post oder ------------
             app.post('/booking' ,verifayJwt , async (req , res) =>{
                   const booking = req.body
@@ -103,7 +106,7 @@ async function run(){
             })
 
 
-            // review ..............
+            // review api ..............
             // review post 
             app.post('/review' , verifayJwt, async (req , res) =>{
                   const review = req.body
@@ -113,11 +116,21 @@ async function run(){
             })
 
             // review read to database 
-            app.get('/review' ,verifayJwt , async (req , res) => {
+            app.get('/review' , async (req , res) => {
                   const query = {}
                   const review = await reviewCollection.find(query).toArray()
                   res.send(review)
             } )
+
+
+            // myProfile api 
+            app.post('/profile' , verifayJwt , async (req , res)=>{
+                  const profile = req.body
+                  const setProfile = await profileCollection.insertOne(profile)
+                  res.send({message: "Your Profile Update SuccessFull"})
+            })
+
+
 
             // create user ................
             app.put('/user/:email' , async (req , res) =>{
