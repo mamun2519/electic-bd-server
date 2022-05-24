@@ -147,10 +147,24 @@ async function run(){
                   const result = await userCollection.updateOne(filter, updateDoc, options);
 
                   res.send({result , token})
+            })
+
+             // get user 
+             app.get('/user' , verifayJwt , async (req , res) =>{
+                   const query = {}
+                   const user = await userCollection.find(query).toArray()
+                   res.send(user)
                   
+            })
+      
+      
+      
+      
+      
+      
+      }
 
-
-            })}
+           
 
 
       
