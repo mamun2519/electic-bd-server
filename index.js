@@ -48,7 +48,7 @@ async function run(){
 
 
             // read data -------
-            app.get('/product'  , async (req , res)=>{
+            app.get('/product' , async (req , res)=>{
                   const query = {}
                   const product = await productCollection.find(query).toArray()
                   res.send(product)     
@@ -86,6 +86,14 @@ async function run(){
                   res.send({message: "Your Order SuccessFull"})
             })
 
+            // read my order 
+            app.get('/booking/:email' , async (req , res) =>{
+                  const email = req.params.email;
+                  const query = {email: email}
+                  const product = await bookingCollection.find(query).toArray()
+                  res.send(product)
+            })
+
             // create user ................
             app.put('/user/:email' , async (req , res) =>{
                   const email = req.params.email
@@ -104,11 +112,7 @@ async function run(){
                   
 
 
-            })
-
-            
-
-      }
+            })}
 
 
       
