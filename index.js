@@ -87,11 +87,18 @@ async function run(){
             })
 
             // read my order 
-            app.get('/booking/:email' , async (req , res) =>{
+            app.get('/booking/:email' , verifayJwt, async (req , res) =>{
                   const email = req.params.email;
                   const query = {email: email}
                   const product = await bookingCollection.find(query).toArray()
                   res.send(product)
+            })
+
+            app.delete('/booking/:id' , async (req , res) =>{
+                  const id = req.params.id
+                  const query = {id : id}
+                  const result = await bookingCollection.deleteOne(query)
+                  res.send(result)
             })
 
             // create user ................
