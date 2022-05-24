@@ -44,6 +44,7 @@ async function run(){
             const productCollection = client.db("manufacture").collection("product");
             const bookingCollection = client.db("manufacture").collection("bookings");
             const userCollection = client.db("manufacture").collection("users");
+            const reviewCollection = client.db("manufacture").collection("reviwes");
 
 
 
@@ -96,10 +97,27 @@ async function run(){
 
             app.delete('/booking/:id' , async (req , res) =>{
                   const id = req.params.id
-                  const query = {id : id}
+                  const query = {_id: ObjectId(id)}
                   const result = await bookingCollection.deleteOne(query)
                   res.send(result)
             })
+
+
+            // review ..............
+            // review post 
+            app.post('/review' , verifayJwt, async (req , res) =>{
+                  const review = req.body
+                  const addedReview = await reviewCollection.insertOne(review)
+                  res.send({message : "Your Review Added Successfull"})
+
+            })
+
+            // review read to database 
+            app.get('/review' ,verifayJwt , async (req , res) => {
+                  const query = {}
+                  const review = await reviewCollection.find(query).toArray()
+                  res.send(review)
+            } )
 
             // create user ................
             app.put('/user/:email' , async (req , res) =>{
