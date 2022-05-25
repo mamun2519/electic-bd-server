@@ -56,12 +56,27 @@ async function run(){
                   res.send(product)     
             })
 
+
+
             // read data specific ----------
             app.get('/product/:id' , async (req , res) =>{
                   const id = req.params.id
                   const query = {_id: ObjectId(id)}
                   const result = await productCollection.findOne(query)
                   res.send(result)
+            })
+
+            // product add 
+            app.post('/product' , async (req , res) =>{
+                  const product = req.body
+                  const result = await productCollection.insertOne(product)
+                  res.send({message: "Product Added Successfull!"})
+            })
+
+            app.get('/manageProduct' , verifayJwt , async (req , res) =>{
+                  const query = {}
+                  const product = await productCollection.find(query).toArray()
+                  res.send(product)
             })
 
             // updateQunetity -----------
@@ -94,6 +109,13 @@ async function run(){
             app.get('/booking/:email' , verifayJwt, async (req , res) =>{
                   const email = req.params.email;
                   const query = {email: email}
+                  const product = await bookingCollection.find(query).toArray()
+                  res.send(product)
+            })
+
+            // manage all order 
+            app.get('/manageOrder' , verifayJwt , async (req , res)=>{
+                  const query = {}
                   const product = await bookingCollection.find(query).toArray()
                   res.send(product)
             })
