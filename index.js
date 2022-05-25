@@ -47,6 +47,7 @@ async function run() {
             const userCollection = client.db("manufacture").collection("users");
             const reviewCollection = client.db("manufacture").collection("reviwes");
             const profileCollection = client.db("manufacture").collection("myProfile");
+            const paymentCollection = client.db("manufacture").collection("payments");
 
 
             // create payment maythod 
@@ -58,7 +59,7 @@ async function run() {
                   const paymentIntent = await stripe.paymentIntents.create({
                         amount: amount,
                         currency: "usd",
-                        payment_method_types: [card]
+                        payment_method_types: ['card']
                   });
                   res.send({ clientSecret: paymentIntent.client_secret })
             })
@@ -149,6 +150,22 @@ async function run() {
                   const query = { _id: ObjectId(id) }
                   const result = await bookingCollection.deleteOne(query)
                   res.send(result)
+            })
+
+            app.patch('/booking/:id' , verifayJwt , async (req , res) =>{
+                  const id = req.params.id
+                  const payment = req.body
+                  const filter = {_id: ObjectId(id)}
+                  const updateDoc = {
+                        $set: {
+                              paid: true,
+                              transactionId: payment.transactionId
+                        }
+                  }
+
+                  const result = await bookingCollection.updateOne(filter , updateDoc)
+                  const setPayment = await paymentCollection.insertOne(payment)
+                  res.send(updateDoc)
             })
 
 
