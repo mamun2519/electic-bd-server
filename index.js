@@ -156,6 +156,43 @@ async function run(){
                    res.send(user)
                   
             })
+
+            // user delete 
+            app.delete('/user/:id', async (req , res) =>{
+                  const id = req.params.id
+                  const query = {_id: ObjectId(id)}
+                  const result = await userCollection.deleteOne(query)
+                  res.send(result)
+            })
+
+            // make user admin 
+            app.put('/user/admin/:email' , verifayJwt , async (req , res) =>{
+                  const email = req.params.email
+
+                  const adminRequster = req.decoded.email
+                  const requestAccount = await userCollection.findOne({email: adminRequster})
+                  
+                  if(requestAccount.role === 'admin'){
+                        const filter = {email: email}
+                  const updateDoc = {
+                        $set: {role: 'admin'}
+                  }
+                  const result = await userCollection.updateOne(filter , updateDoc)
+                  res.send(result)
+
+                  }
+                  else{
+                        res.status(403).send({message: "forbiden"})
+                  }  
+            })
+
+            // chack admin 
+            app.get('/user/:email' , async (req , res) =>{
+                  const email = req.params.email
+                  const user = await userCollection.findOne({email: email})
+                  const isAdmin = user.role === 'admin'
+                  res.send({admin: isAdmin})
+            })
       
       
       
