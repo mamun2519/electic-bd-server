@@ -120,6 +120,14 @@ async function run(){
                   res.send(product)
             })
 
+            // read specific 
+            app.get('/bookings/:id' , verifayJwt , async (req , res) =>{
+                  const id = req.params.id
+                  const query = {_id: ObjectId(id)}
+                  const result = await bookingCollection.findOne(query)
+                  res.send(result)
+            })
+
             app.delete('/booking/:id' , async (req , res) =>{
                   const id = req.params.id
                   const query = {_id: ObjectId(id)}
