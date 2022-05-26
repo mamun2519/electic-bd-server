@@ -160,7 +160,7 @@ async function run() {
                   const filter = {_id: ObjectId(id)}
                   const updateDoc = {
                         $set: {
-                              paid: true,
+                              paid: "paid",
                               transactionId: payment.transactionId
                         }
                   }
@@ -177,7 +177,7 @@ async function run() {
                   const filter = {_id: ObjectId(id)}
                   const updateDoc = {
                         $set: {
-                              shipped: true,
+                              paid: "Shipped",
                         }
                   }
 
