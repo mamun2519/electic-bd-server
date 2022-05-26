@@ -144,6 +144,7 @@ async function run() {
                   const result = await bookingCollection.findOne(query)
                   res.send(result)
             })
+            // booking delete 
 
             app.delete('/booking/:id', async (req, res) => {
                   const id = req.params.id
@@ -151,7 +152,8 @@ async function run() {
                   const result = await bookingCollection.deleteOne(query)
                   res.send(result)
             })
-
+             
+            // booking update and payment add 
             app.patch('/booking/:id' , verifayJwt , async (req , res) =>{
                   const id = req.params.id
                   const payment = req.body
@@ -166,6 +168,23 @@ async function run() {
                   const result = await bookingCollection.updateOne(filter , updateDoc)
                   const setPayment = await paymentCollection.insertOne(payment)
                   res.send(updateDoc)
+            })
+
+            // shipped confrom api 
+            
+            app.patch('/shipped/:id' , verifayJwt , async (req , res) =>{
+                  const id = req.params.id
+                  const filter = {_id: ObjectId(id)}
+                  const updateDoc = {
+                        $set: {
+                              shipped: true,
+                        }
+                  }
+
+                  const result = await bookingCollection.updateOne(filter , updateDoc)
+                  res.send(updateDoc)
+
+
             })
 
 
