@@ -96,6 +96,13 @@ async function run() {
                   res.send(product)
             })
 
+            app.delete('/product/:id', verifayJwt, async (req, res) => {
+                  const id = req.params.id
+                  const query = { _id: ObjectId(id) }
+                  const result = await productCollection.deleteOne(query)
+                  res.send(result)
+            })
+
             // updateQunetity -----------
             app.put('/products/:id', async (req, res) => {
                   const id = req.params.id
@@ -113,7 +120,7 @@ async function run() {
 
             })
 
-            // order api ..........
+            // order api .....................
 
             // post oder ------------
             app.post('/booking', verifayJwt, async (req, res) => {
@@ -160,7 +167,7 @@ async function run() {
                   const filter = {_id: ObjectId(id)}
                   const updateDoc = {
                         $set: {
-                              paid: "paid",
+                              paid: "Paid",
                               transactionId: payment.transactionId
                         }
                   }
@@ -274,6 +281,14 @@ async function run() {
                   const user = await userCollection.findOne({ email: email })
                   const isAdmin = user.role === 'admin'
                   res.send({ admin: isAdmin })
+            })
+
+            // read transactionId 
+            app.get('/transetion/:id' , async (req , res) =>{
+                  const id = req.params.id
+                  const query = {_id: ObjectId(id)}
+                  const result = 
+                  res.send(result)
             })
 
 
