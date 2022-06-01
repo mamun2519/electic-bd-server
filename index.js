@@ -11,11 +11,10 @@ const stripe = require("stripe")('sk_test_51L1nmNCGpaTt0RU81oq26j6Ta7gwb9pGlOOwx
 
 const app = express()
 // middale ware 
-const corsConfig = {
-      origin: "https://manufacturer-project-82430.web.app/",
-      credentials: true,
-    }
-    app.use(cors(corsConfig))
+
+    app.use(cors({
+          origin: "http://localhost:3000"
+    }))
 app.use(express.json())
 
 
@@ -24,6 +23,7 @@ app.use(express.json())
 
 const uri = `mongodb+srv://${process.env.NAME}:${process.env.PASSWORD}@admin.tk0bb.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+console.log(uri);
 
 
 function verifayJwt(req, res, next) {
