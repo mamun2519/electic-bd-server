@@ -1,15 +1,21 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 5000
 require('dotenv').config()
+const express = require('express')
+
+
+const port = process.env.PORT || 5000
+
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const stripe = require("stripe")('sk_test_51L1nmNCGpaTt0RU81oq26j6Ta7gwb9pGlOOwxjeXAQgefsXMvmRxFUopKE2St6GDbDpxjUug0KxRyqzL6oKarPcR00lqLjh70r');
 
-
+const app = express()
 // middale ware 
-app.use(cors())
+const corsConfig = {
+      origin: "https://manufacturer-project-82430.web.app/",
+      credentials: true,
+    }
+    app.use(cors(corsConfig))
 app.use(express.json())
 
 
