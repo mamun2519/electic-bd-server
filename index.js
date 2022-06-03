@@ -10,7 +10,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const stripe = require("stripe")('sk_test_51L1nmNCGpaTt0RU81oq26j6Ta7gwb9pGlOOwxjeXAQgefsXMvmRxFUopKE2St6GDbDpxjUug0KxRyqzL6oKarPcR00lqLjh70r');
 
 const app = express()
-// middale ware  lol 
+// middale ware 
  
     app.use(cors({
           origin: "https://manufacturer-project-82430.web.app"
