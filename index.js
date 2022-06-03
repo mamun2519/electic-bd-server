@@ -26,7 +26,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 console.log(uri);
 
 
-// verifay funcation 
+// verifay jwt funcation 
 function verifayJwt(req, res, next) {
       const authHeader = req.headers.authorization
 
