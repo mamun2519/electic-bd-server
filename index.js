@@ -13,7 +13,7 @@ const app = express()
 // middale ware 
  
     app.use(cors({
-          origin: "http://localhost:3000"
+          origin: "https://manufacturer-project-82430.web.app"
     }))
 app.use(express.json())
 
